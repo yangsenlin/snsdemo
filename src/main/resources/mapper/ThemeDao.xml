@@ -3,7 +3,7 @@
 <mapper namespace="com.ysl.snsDemo.dao.ThemeDao">
 	<resultMap type="com.ysl.snsDemo.entity.Theme" id="themeResultMap">
 		<id column="id" property="id" jdbcType="BIGINT" />
-		<id column="publisherId" property="publisherId" jdbcType="BIGINT" />
+		<result column="publisherId" property="publisherId" jdbcType="BIGINT" />
 		<result column="content" property="content" jdbcType="VARCHAR" />
 		<result column="publishTime" property="publishTime"/>
 	</resultMap>
@@ -13,7 +13,7 @@
     </sql>
     
     <insert id="publishTheme" useGeneratedKeys="true" keyProperty="id" parameterType="com.ysl.snsDemo.entity.Theme" >
-        INSERT into
+        INSERT into 
         tb_theme
         (publisherId,content,publishtime)
         VALUES
@@ -24,17 +24,16 @@
     <select id="queryThemes" parameterType="com.ysl.snsDemo.entity.ThemeVO" resultMap="themeResultMap">
     	SELECT
     		<include refid="Base_Theme_Column_List" />
-    	FROM　tb_theme t
+    	FROM tb_theme t
     	WHERE t.publisherId = #{publisherId} AND t.publishTime BETWEEN  str_to_date(#{startDate}, '%Y-%m-%d %H:%I:%S')
     	AND t.publishTime  str_to_date(#{startDate}, '%Y-%m-%d %H:%I:%S') ORDER BY t.id desc
     </select>
     
     <!-- 根据ID查询主题信息 -->
-    <select id="getThemeById" parameterType="java.lang.Long" resultMap="themeResultMap">
+    <select id="getThemeById" resultMap="themeResultMap">
     	SELECT
     		<include refid="Base_Theme_Column_List" />
-    	FROM　tb_theme t
-    	WHERE t.id = #{themeId}
+    	from `tb_theme` t WHERE t.id = #{themeId,jdbcType=BIGINT}
     </select>
     
     <!-- 修改主题内容 -->

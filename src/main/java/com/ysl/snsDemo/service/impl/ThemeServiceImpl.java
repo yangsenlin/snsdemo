@@ -22,7 +22,7 @@ public class ThemeServiceImpl implements ThemeService{
 	@Autowired
 	private ThemeDao themeDao;
 	
-	@CachePut(key="#p0.id")//以ID为key把数据缓存到redis 
+	@CachePut//以参数的hash做为key 
 	@Override
 	public Theme publishTheme(Theme theme) {
 		//使用MYSQL的自增生产ID
@@ -30,7 +30,7 @@ public class ThemeServiceImpl implements ThemeService{
 		return themeDao.getThemeById(theme.getId());
 	}
 	
-	@CachePut(key="#p0.id")//以ID为key更新redis缓存
+	@CachePut//以参数的hash做为key 
 	@Override
 	public Theme updateTheme(Theme theme) {
 		themeDao.updateTheme(theme);
